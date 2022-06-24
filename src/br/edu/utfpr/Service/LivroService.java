@@ -1,5 +1,7 @@
 package br.edu.utfpr;
 
+import br.edu.utfpr.Model.Livro;
+
 public class LivroService {
 
     public Livro encontraLivroPeloCodigo(int cod){

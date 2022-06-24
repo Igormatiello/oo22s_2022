@@ -1,9 +1,11 @@
 package br.edu.utfpr;
 
+import br.edu.utfpr.Model.Livro;
+import br.edu.utfpr.Model.Locacao;
+import br.edu.utfpr.Model.Reserva;
+
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.List;
 import java.util.stream.Stream;
 
 public class ReservaService {

@@ -1,5 +1,9 @@
 package br.edu.utfpr;
 
+import br.edu.utfpr.Model.Livro;
+import br.edu.utfpr.Model.Locacao;
+import br.edu.utfpr.Model.Pessoa;
+
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 

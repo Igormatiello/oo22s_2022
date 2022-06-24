@@ -1,5 +1,7 @@
 package br.edu.utfpr;
 
+import br.edu.utfpr.Model.Pessoa;
+
 public class PessoaService {
 
     public Pessoa encontraPessoaPeloCodigo(int cod){

@@ -1,7 +1,9 @@
-package br.edu.utfpr;
+package br.edu.utfpr.Model;
+
+import br.edu.utfpr.Model.Livro;
+import br.edu.utfpr.Model.Pessoa;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Locacao {
 
