@@ -1,5 +1,6 @@
-package br.edu.utfpr;
+package br.edu.utfpr.Service;
 
+import br.edu.utfpr.BancoDeDados;
 import br.edu.utfpr.Model.Livro;
 import br.edu.utfpr.Model.Locacao;
 import br.edu.utfpr.Model.Reserva;
@@ -8,54 +9,73 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.stream.Stream;
 
-public class ReservaService {
+public class ReservaService implements CrudService<Reserva,Integer>{
 
+
+    @Override
+    public Reserva save(Reserva entity) {
+        BancoDeDados.reservas.add(entity);
+        return entity;
+    }
+
+    @Override
+    public Reserva getById(Integer id) {
+        return BancoDeDados.reservas.stream()
+                .filter(re->re.getId()==id)
+                .findFirst()
+                .get();
+    }
+
+    @Override
+    public void delete(Reserva entity) {
+        BancoDeDados.reservas.remove(entity);
+    }
 
     public  boolean verificaDisponibilidadeDeReserva(int cod_livro, LocalDate dataInicial, LocalDate dataFinal) {
 
         boolean parte1 = true;
 
-        if (BancoDeDados.livros.stream()
-                .filter(livro -> livro.getCod_livro() == cod_livro)
+        Livro livro = BancoDeDados.livros.stream()
+                .filter(livro1 -> livro1.getCod_livro() == cod_livro)
                 .findFirst()
-                .get().isEstaAlugado()) ;
+                .get();
+        if (BancoDeDados.livros.stream()
+                .filter(livro1 -> livro1.getCod_livro() == cod_livro)
+                .findFirst()
+                .get().isEstaAlugado())
         {
-            Livro livro = BancoDeDados.livros.stream()
-                    .filter(livro1 -> livro1.getCod_livro() == cod_livro)
-                    .findFirst()
-                    .get();
+
 
             Locacao loca = BancoDeDados.locacoes.stream().filter(locacao -> locacao.getLivro().equals(livro) )
                     .findFirst()
-                    .get();
+                    .orElse(null);
 
 
             //verifica
+            if(loca!= null)
             parte1 = ChronoUnit.DAYS.between(loca.getDataFinal(), dataInicial) >= 0;
         }
-            if (parte1 == false) {
+            if (parte1 ) {
                 System.out.println("Livro indisponível");
                 return false;
 
             }
 
 
-            Livro livro1 = BancoDeDados.livros.stream()
-                    .filter(livro2 -> livro2.getCod_livro() == cod_livro)
-                    .findFirst()
-                    .get();
 
-            Stream<Reserva> streamReserva = BancoDeDados.reservas.stream().
-                    filter(reserva -> reserva.getLivro().equals(livro1));
 
-            Long reservasLivro = streamReserva.count();
+
+
+            Long reservasLivro = BancoDeDados.reservas.stream().
+                    filter(reserva -> reserva.getLivro().equals(livro)).count();
 
             if (reservasLivro == 0) {
                 System.out.println("Livro disponível");
                 return true;
 
             } else {
-                Long reservaSobrepostas = streamReserva.filter(reserva ->
+                Long reservaSobrepostas = BancoDeDados.reservas.stream().
+                        filter(reserva -> reserva.getLivro().equals(livro)).filter(reserva ->
                                 ChronoUnit.DAYS.between(dataInicial, reserva.getDataInicial()) < 0 &&
                                         ChronoUnit.DAYS.between(dataFinal, reserva.getDataInicial()) < 0 ||
                                         ChronoUnit.DAYS.between(dataInicial, reserva.getDataInicial()) > 0 &&
@@ -75,15 +95,6 @@ public class ReservaService {
 
         return true;
     }
-
-    public  void reservaLivro(Reserva re ){
-
-
-    BancoDeDados.reservas.add(new Reserva(re.getLivro(),re.getDataInicial(),re.getDataFinal(),re.getPessoa()));
-
-    }
-
-
 
 
 

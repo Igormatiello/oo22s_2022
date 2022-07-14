@@ -1,27 +1,19 @@
-package br.edu.utfpr;
+package br.edu.utfpr.Model;
 
-public class Pessoa {
+public class Pessoa extends Entity{
     private String nome;
-    private int cod_pessoa;
 
-    public Pessoa(String nome, int cod_pessoa){
-        this.cod_pessoa=cod_pessoa;
+    public Pessoa( String nome,int cod_pessoa){
+        super.id=cod_pessoa;
         this.nome=nome;
 
     }
 
 
-    public Pessoa(){
-
-
-    }
-
+public int getCodPessoa(){return super.id;}
 
     public String getNome() {
         return nome;
     }
 
-    public int getCod_pessoa() {
-        return cod_pessoa;
-    }
 }

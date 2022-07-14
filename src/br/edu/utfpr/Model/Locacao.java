@@ -5,21 +5,22 @@ import br.edu.utfpr.Model.Pessoa;
 
 import java.time.LocalDate;
 
-public class Locacao {
+public class Locacao extends Entity {
 
     private Livro livro;
     private Pessoa pessoa;
     private LocalDate dataInicial;
     private LocalDate dataFinal;
 
-    public Locacao(Livro l, Pessoa p, LocalDate di, LocalDate df){
+    public Locacao(int cod_locacao,Livro l, Pessoa p, LocalDate di, LocalDate df){
+        super.id=cod_locacao;
         this.livro=l;
         this.pessoa=p;
         this.dataInicial=di;
         this.dataFinal=df;
 
     }
-
+    public int getCodLocacao(){return super.id;}
 
     public Livro getLivro() {
         return livro;

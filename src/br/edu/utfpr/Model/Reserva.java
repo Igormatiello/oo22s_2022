@@ -1,9 +1,11 @@
-package br.edu.utfpr;
+package br.edu.utfpr.Model;
+
+import br.edu.utfpr.Model.Livro;
+import br.edu.utfpr.Model.Pessoa;
 
 import java.time.LocalDate;
-import java.util.Date;
 
-public class Reserva {
+public class Reserva extends Entity{
 
    private Livro livro;
     private LocalDate dataInicial;
@@ -11,7 +13,8 @@ public class Reserva {
     private Pessoa pessoa;
 
 
-    public Reserva(Livro l, LocalDate di, LocalDate df, Pessoa p){
+    public Reserva(int codReserva,Livro l, LocalDate di, LocalDate df, Pessoa p){
+        super.id=codReserva;
         this.livro=l;
         this.dataInicial=di;
         this.dataFinal=df;

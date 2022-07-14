@@ -1,8 +1,7 @@
-package br.edu.utfpr;
+package br.edu.utfpr.Model;
 
-public class Livro {
+public class Livro extends Entity{
 
-    private int cod_livro;
     private String titulo;
     private String autor;
     private int numeroPaginas;
@@ -10,20 +9,18 @@ public class Livro {
     private boolean estaAlugado;
 
     public Livro(int cod_livro,String titulo, String autor, int numeroPaginas, int anoPublicacao, boolean estaAlugado) {
-        this.cod_livro=cod_livro;
+        super.id=cod_livro;
         this.estaAlugado=estaAlugado;
         this.titulo = titulo;
         this.autor = autor;
         this.numeroPaginas = numeroPaginas;
         this.anoPublicacao = anoPublicacao;
     }
-    public Livro(){
 
-    };
 
 
     public int getCod_livro() {
-        return cod_livro;
+        return super.id;
     }
 
     public String getTitulo() {

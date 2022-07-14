@@ -1,5 +1,13 @@
 package br.edu.utfpr;
 
+import br.edu.utfpr.Model.Livro;
+import br.edu.utfpr.Model.Pessoa;
+import br.edu.utfpr.Model.Reserva;
+import br.edu.utfpr.Service.LivroService;
+import br.edu.utfpr.Service.LocacaoService;
+import br.edu.utfpr.Service.PessoaService;
+import br.edu.utfpr.Service.ReservaService;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -40,8 +48,8 @@ LivroService livroService=new LivroService();
         BancoDeDados.livros.add(new Livro(9,"dragão","vitor mike",620,2007,false));
 
 
-
-        BancoDeDados.pessoas.add(new Pessoa("igor matiello", 1));
+        Pessoa p1= new Pessoa("igor matiello", 1);
+        BancoDeDados.pessoas.add(p1);
         BancoDeDados.pessoas.add(new Pessoa("jaque silva", 2));
         BancoDeDados.pessoas.add(new Pessoa("mauricio barbosa", 3));
         BancoDeDados.pessoas.add(new Pessoa("gabriel fernandes", 4));
@@ -98,15 +106,17 @@ LivroService livroService=new LivroService();
 
 
 
-                    if( rs.verificaDisponibilidadeDeReserva(codigoReserva,dataInicial,dataFinal));
+                    if( rs.verificaDisponibilidadeDeReserva(codigoReserva,dataInicial,dataFinal))
                      {
                          System.out.println("Informe o codigo da pessoa: ");
                          scanner.nextLine();
                          int codPessoa = scanner.nextInt();
+                         int aux=1;
 
-                         Reserva reserva=new Reserva(livroService.encontraLivroPeloCodigo(codigoReserva),dataInicial,dataFinal,
+                         Reserva reserva=new Reserva(aux,livroService.encontraLivroPeloCodigo(codigoReserva),dataInicial,dataFinal,
                                 ps.encontraPessoaPeloCodigo( codPessoa));
-
+                         BancoDeDados.reservas.add(reserva);
+                        aux++;
                      }
 
                 break;

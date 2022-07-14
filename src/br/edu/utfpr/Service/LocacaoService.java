@@ -1,5 +1,6 @@
-package br.edu.utfpr;
+package br.edu.utfpr.Service;
 
+import br.edu.utfpr.BancoDeDados;
 import br.edu.utfpr.Model.Livro;
 import br.edu.utfpr.Model.Locacao;
 import br.edu.utfpr.Model.Pessoa;
@@ -7,17 +8,37 @@ import br.edu.utfpr.Model.Pessoa;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-public class LocacaoService {
+public class LocacaoService implements CrudService <Locacao,Integer> {
 
 
+    @Override
+    public Locacao save(Locacao entity) {
+        BancoDeDados.locacoes.add(entity);
+        return entity;
+    }
+
+    @Override
+    public Locacao getById(Integer id) {
+
+        return BancoDeDados.locacoes.stream()
+                .filter(lo->lo.getId()==id)
+                .findFirst()
+                .get();
+    }
+
+    @Override
+    public void delete(Locacao entity) {
+
+        BancoDeDados.locacoes.remove(entity);
+    }
     public boolean livroDisponivel(int cod_livro) {
 
         boolean resposta= !BancoDeDados.livros.stream()
-                .filter(livro -> livro.getCod_livro() == cod_livro)
+                        .filter(livro -> livro.getCod_livro() == cod_livro)
                 .findFirst()
                 .get().isEstaAlugado();
 
-        if(resposta==true)
+        if(resposta)
         {
             System.out.println("Livro disponível");
 
@@ -42,9 +63,12 @@ public class LocacaoService {
 
         if (livroDisponivel(cod_livro)) {
 
+            int aux=1;
             BancoDeDados.locacoes.add(
-                    new Locacao(l, pe, LocalDate.now(), ChronoUnit.DAYS.addTo(LocalDate.now(), 30)));
 
+                    new Locacao(aux,l, pe, LocalDate.now(), ChronoUnit.DAYS.addTo(LocalDate.now(), 30)));
+
+            aux++;
 
 //TORNAR O LIVRO INDISPONIVEL
             BancoDeDados.livros.stream()
